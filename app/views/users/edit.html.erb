@@ -1,0 +1,23 @@
+<% provide(:title, "Edit user") %>
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'fields', f: f %> 
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+    <%= gravatar_for @user %>
+    <%= link_to "change", "http://gravatar.com/emails", :target => "_blank" %>
+  </div>
+</div>
+<div>
+  <br>
+  <!-- The check box will appear checked if user.followmail is set to false and they will not receive email when followed-->
+  <%= check_box_tag "followmail", '1', !@user.followmail %>
+  <%= label_tag "followmail", "Check this box if you do not wish to receive email notifications when a user follows you", :class => "checkbox inline", :id => "followmail" %>
+</div>
+
+

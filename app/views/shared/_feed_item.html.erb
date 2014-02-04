@@ -1,0 +1,28 @@
+<li id="<%= feed_item.id %>">
+  <%= recipient =  User.find_by(id: feed_item.message_to)
+  #show recipient's gravatar for sent messages
+  if sentMessage?(feed_item)
+    link_to gravatar_for(recipient), recipient
+  else	
+    link_to gravatar_for(feed_item.user), feed_item.user 
+  end %>
+  <span class="user">
+    <% if sentMessage?(feed_item) %>
+    <span> To: </span>
+    <%= link_to recipient.name, recipient  %>
+    <span class="content"><%= feed_item.content.sub(/\*\S*\s/) { "" } %></span>
+    <!-- check if it's a received message --> 
+    <% elsif feed_item.message_to %>
+    <span> From: </span>
+    <%= link_to feed_item.user.name, feed_item.user %>
+    <span class="content"><%= feed_item.content.sub(/\*\S*\s/) { "" } %></span>
+    <% else %> 
+    <%= link_to feed_item.user.name, feed_item.user %>
+    <span class="content"><%= feed_item.content %></span>
+    <% end %>
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
+  </span>
+  <%= render 'shared/delete_link', object: feed_item %> 
+</li>

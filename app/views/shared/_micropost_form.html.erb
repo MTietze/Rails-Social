@@ -1,0 +1,40 @@
+<%= form_for(@micropost) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+  </div>
+  <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+  <span class="countdown"></span> 
+  <span class="btn-group">
+    <a class="btn dropdown-toggle" id="replyto" data-toggle="dropdown" href="#">
+    Reply To
+    <span class="caret"></span>
+    </a>
+
+    <ul class="dropdown-menu" >
+        <% @user.followed_users.each do |followed| %>
+          <li class="recipient" > 
+            <% @name = followed.name.gsub(" ", "_") %>
+          	<%= link_to @name, "#", :class => "reply" %> 
+          </li>
+        <% end %>
+    </ul>
+    
+</span>
+<span class="btn-group">
+<a class="btn dropdown-toggle" id="messageto" data-toggle="dropdown" href="#">
+    Message To
+    <span class="caret"></span>
+    </a>
+
+    <ul class="dropdown-menu" >
+        <% @user.followed_users.each do |followed| %>
+          <li class="recipient" > 
+            <% @name = followed.name.gsub(" ", "_") %>
+            <%= link_to @name, "#", :class => "message" %> 
+          </li>
+        <% end %>
+    </ul>
+    </span>
+<% end %>
+
